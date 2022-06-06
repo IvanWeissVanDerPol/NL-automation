@@ -1,0 +1,8 @@
+{
+"DSLong_day":"values\\extrahourDLS_day.xml",
+"DSShort_day":"values\\lesshourDLS_day.xml",
+"DSNormal_day":"values\\normal_day.xml",
+"DSLong_month":"values\\extrahourDLS_month.xml",
+"DSShort_month":"values\\lesshourDLS_month.xml",
+"DSNormal_month":"values\\normal_month.xml"
+}

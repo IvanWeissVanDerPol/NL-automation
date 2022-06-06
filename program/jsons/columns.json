@@ -1,0 +1,3 @@
+{
+    "test_cases_excel_columns":["#","Element","path","Test message","Status","Error","Observations","optional","BaseType","restricted values","Enumerations","Case","Daylight saving case","base value","default tested values","extra values to test","number of cases","messageID","new cases","current tests values","test folder","ExpectedErrorCode"]
+}
