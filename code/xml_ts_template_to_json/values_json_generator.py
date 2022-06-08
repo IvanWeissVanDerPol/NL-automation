@@ -35,7 +35,8 @@ def values_json_generator(xml_path):
                 json_data[os.path.splitext(file_name)[0]] = ",".join(quantity)
 
     #write the json file
-    with open('../../values/values.json', 'w') as outfile:
+    json_path = xml_path + 'values.json'
+    with open(json_path, 'w') as outfile:
         json.dump(json_data, outfile, indent=4)
 
 if __name__ == "__main__":
