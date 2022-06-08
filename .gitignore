@@ -139,7 +139,8 @@ cython_debug/
 .gitignore
 excel/*
 xsd/*
-values/*
 xml/*
 xml/base/*
-excel/mesage_details/*
+excel/*
+*.xlsx
+!spec/*.xlsx
