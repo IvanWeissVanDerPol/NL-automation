@@ -40,7 +40,7 @@ def add_paths(message_details_folder_path):
                         
                 
                 if not(pd.isnull(row.BaseType)) and not(pd.isnull(row[col])): 
-                    if row["Default Values"] != 'not_mapped' : 
+                    if row["DEFAULT VALUES"] != 'not_mapped' : 
                         element_path_list = list(element_path.values())
                         element_path_list = list(filter(("").__ne__, element_path_list))
                         element_path_string = "/".join(element_path_list)
@@ -49,7 +49,7 @@ def add_paths(message_details_folder_path):
 
         df["path"] = list_of_Paths_strings
         writer = pd.ExcelWriter(path=path, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1',index=False,columns = ['L1','L2','L3','L4','L5','path','Type','BaseType','Cardinality','Constraints','Default Values','Enumerations','BS data Type','BS description','BS functional Parameter'])
+        df.to_excel(writer, sheet_name='Sheet1',index=False,columns = ['L1','L2','L3','L4','L5','path','Type','BaseType','Cardinality','Constraints','DEFAULT VALUES','Enumerations','BS data Type','BS description','BS functional Parameter'])
         writer.save()
 
 

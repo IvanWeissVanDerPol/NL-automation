@@ -1,5 +1,5 @@
 import json
-from base_xml_to_case_xml.case_xml_generator import generate_xml_cases
+from base_xml_to_case_xml.case_xml_generator import decompress_excel_messages
 from xsd_to_excel.make_excel_from_xsd import make_excels_from_xsd
 from excel_to_xml.xml_generator import make_base_xmls
 
@@ -17,9 +17,9 @@ while stay_in_program:
     case = "1"
 #    case = ""
     if case == "1":
-        #make_excels_from_xsd(folder_Of_xsd=paths.xsd_folder_path) # makes a base excel with the structure of the xsd
+        make_excels_from_xsd(folder_Of_xsd=paths.xsd_folder_path) # makes a base excel with the structure of the xsd
         #make_base_xmls(message_details_folder_path=paths.message_details_folder_path)
-        generate_xml_cases(message_details_folder_path=paths.message_details_folder_path)
+        #decompress_excel_messages(message_details_folder_path=paths.message_details_folder_path)
     #     message_details_generator.make_excels_from_xsd(folder_Of_xsd=paths.xsd_folder_path) # makes a base excel with the structure of the xsd
     #     add_Tests.add_paths(message_details_folder_path=paths.message_details_folder_path)  # adds an column that contains the path to the element in the xsd tree
     #     add_Tests.add_Tests(message_details_folder_path=paths.message_details_folder_path)  # adds an column that contains the tests for each element (the tests are defined in element_tests.py)

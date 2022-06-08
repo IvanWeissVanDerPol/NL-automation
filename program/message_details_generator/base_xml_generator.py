@@ -85,7 +85,7 @@ def get_base_Xml(excel_name):
             df = pd.read_excel(path)
             
             BaseType = df['BaseType']
-            default_element_values = df['Default Values']
+            default_element_values = df['DEFAULT VALUES']
             #remove the columns that are not needed
             df = df[df.columns.difference(['Type'])]
             df = df[df.columns.difference(['Cardinality'])]
@@ -93,7 +93,7 @@ def get_base_Xml(excel_name):
             df = df[df.columns.difference(['Enumerations'])]
             df = df[df.columns.difference(['tests'])]
             df = df[df.columns.difference(['BaseType'])]
-            df = df[df.columns.difference(['Default Values'])]
+            df = df[df.columns.difference(['DEFAULT VALUES'])]
             df = df[df.columns.difference(['Tests Values'])]
             df = df[df.columns.difference(['BS data Type'])]
             df = df[df.columns.difference(['BS description'])]
@@ -409,7 +409,7 @@ def update_xml(base_xml_excel_path,base_Xml_path):
         df = pd.read_excel(base_xml_excel_path)
         for ind in df.index:
             element_path = df["path"][ind]
-            value = df["Default Values"][ind] 
+            value = df["DEFAULT VALUES"][ind] 
             if value != "not_mapped" and value != "mapped" and not pd.isnull(value):
                 modify_test_case(new_case_path = base_Xml_path,element_path = element_path, value = value)
         

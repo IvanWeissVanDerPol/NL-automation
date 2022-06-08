@@ -67,7 +67,7 @@ def create_messages(df,case_folder_path):
     
     
 
-def generate_xml_cases(message_details_folder_path):
+def decompress_excel_messages(message_details_folder_path):
     folder = listdir(message_details_folder_path)
     for excel in folder:
         

@@ -59,7 +59,7 @@ def make_base_json(excel_name,message_details_folder_path):
     path = message_details_folder_path + "\\" + excel_name
     df = pd.read_excel(path)
     
-    list_of_usefull_columns = ["path","Default Values"]
+    list_of_usefull_columns = ["path","DEFAULT VALUES"]
     columns = list(df.columns.values)
     #remove the columns that are not needed
     df = df[df['Add to Json'].isin(['yes'])]
@@ -74,7 +74,7 @@ def make_base_json(excel_name,message_details_folder_path):
     for row in df.iterrows():
         row = row[1]
         path = row['path']
-        value = str(row['Default Values'])
+        value = str(row['DEFAULT VALUES'])
         jsonDict[path] = value
     jsonDict["ExpectedErrorCode"] = "ExpectedErrorCode_defaultValue"
     print(jsonDict)
@@ -97,7 +97,7 @@ def update_json(base_json_excel_path,base_json_path):
         df = pd.read_excel(base_json_excel_path)
         for ind in df.index:
             element_path = df["path"][ind]
-            value = df["Default Values"][ind] 
+            value = df["DEFAULT VALUES"][ind] 
             if value != "not_mapped" and value != "mapped" and not pd.isnull(value):
                 with open(base_json_path) as json_file:
                     data = json.load(json_file)

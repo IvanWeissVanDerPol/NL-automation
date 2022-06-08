@@ -67,7 +67,7 @@ def add_test_cases(df ,row,added_subtitles,columns,title,cont,excel_row,element_
     Enumerations = row["Enumerations"]
     restricted_values = row.Constraints
     json_element_test = element_tests.tests
-    mapped = row["Default Values"]
+    mapped = row["DEFAULT VALUES"]
     #make a test case for each case
     for case in list_of_cases:
         test_values = json_element_test[element_path_string_for_json][case]
@@ -140,7 +140,7 @@ def make_test_cases(message_details_folder_path):
                             
                     
                     if not(pd.isnull(row.tests)) and not(pd.isnull(row[col])): 
-                        if row["Default Values"] != 'not_mapped' : 
+                        if row["DEFAULT VALUES"] != 'not_mapped' : 
                             excel_row,test_case_cont ,excel_df = add_test_cases(df=excel_df,added_subtitles=added_subtitles, row=row, columns=columns, title=title, cont=test_cases_cont, excel_row=excel_row,element_path=element_path)
                             added_subtitles = False
             element_path_list = list(element_path.values())
@@ -152,7 +152,7 @@ def make_test_cases(message_details_folder_path):
         #save the excel
         df["path"] = list_of_element_path_string
         writer = pd.ExcelWriter(path=path, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1',index=False,columns=["L1","L2","L3","L4","L5","path","Default Values","tests","BS data Type","BS description","BS functional Parameter","BaseType","Cardinality","Constraints","Enumerations"])
+        df.to_excel(writer, sheet_name='Sheet1',index=False,columns=["L1","L2","L3","L4","L5","path","DEFAULT VALUES","tests","BS data Type","BS description","BS functional Parameter","BaseType","Cardinality","Constraints","Enumerations"])
         writer.save()
         path = paths.test_cases_folder_path + "\\test_cases_" + title + ".xlsx"
         writer = pd.ExcelWriter(path=path, engine='xlsxwriter')

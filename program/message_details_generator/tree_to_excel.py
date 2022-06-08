@@ -33,7 +33,7 @@ def traverse_tree(node:complex_element ,listOLists,json_file):
     listOLists["BaseType"].append(node.complex_data.Base_Type)       
     listOLists["Constraints"].append(node.complex_data.Constraints)
     listOLists["Enumerations"].append(node.complex_data.Enumerations)
-    listOLists["Default Values"].append("")
+    listOLists["DEFAULT VALUES"].append("")
     
     if(node.complex_data.Base_Type != ""):
         string = node.complex_data.Name + "_1",node.complex_data.Name + "_2"
@@ -83,7 +83,7 @@ def make_excels_from_xsd(folder_Of_xsd):
             listOLists["BaseType"] = []
             listOLists["Constraints"] = []
             listOLists["Enumerations"] = []
-            listOLists["Default Values"] = []
+            listOLists["DEFAULT VALUES"] = []
             listOLists["BS data Type"] = []
             listOLists["BS description"] = []
             listOLists["BS functional Parameter"] = []
