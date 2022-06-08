@@ -1,7 +1,7 @@
 import re
 import os
 import json
-
+import paths
 def values_json_generator(xml_path):
     """
         generates a json file with the values of the quantities in the xml files that contains the folder that is passed as a parameter
@@ -35,7 +35,7 @@ def values_json_generator(xml_path):
                 json_data[os.path.splitext(file_name)[0]] = ",".join(quantity)
 
     #write the json file
-    with open('../../values/values.json', 'w') as outfile:
+    with open(paths.times_json_path, 'w') as outfile:
         json.dump(json_data, outfile, indent=4)
 
 if __name__ == "__main__":

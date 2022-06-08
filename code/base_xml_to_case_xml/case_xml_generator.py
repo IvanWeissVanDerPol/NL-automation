@@ -5,6 +5,8 @@ import pandas as pd
 from os import listdir 
 import paths
 
+string_of_start_of_json_stuff = "info para json"
+
 def printCompleteDf(df):
     pd.set_option("max_rows", None)
     pd.set_option("max_columns", None)
@@ -24,10 +26,12 @@ def make_message_case_folder(path,test_message):
     return test_folder
 
 def create_messages(df,case_folder_path):
+    df = df.T
     df.columns = df.iloc[0]
     df = df[1:]
+    printCompleteDf(df)
     #the idea
-    #it recives a data frame where each column is a field of a message and each row is a message
+    #it receives a data frame where each column is a field of a message and each row is a message
     # mi intent is to first go across each row and see if it has an array [val1, val2] in it
     # if it has an array make a x copy of the row and place the value of the array in the corresponding field where x is the number of elements in the array
     # then continue to the next field and so on until the end   
@@ -39,22 +43,26 @@ def create_messages(df,case_folder_path):
             row_index = list(df.index).index(row.name)
             #iterate across the columns and print the values
             for col in df.columns:
-                if "[" in row[col]:
-                    array = row[col].replace("[", "").replace("]", "").split(",")
-                    for element in array:
-                        copy_of_row = row.copy()        
-                        # modify the copy
-                        copy_of_row[col]= element 
-                        copy_of_row.name = copy_of_row.name + "_" + str(array.index(element))
-                        # insert the copy into the data frame at index row_index
-                        df = df.append(copy_of_row, sort=True)
-                        made_new_row = True
-                    # remove the original row
-                    df = df.drop(df.index[row_index])
-                    print("df after drop")
-                    printCompleteDf(df.T)
-                    break
-        
+                if not pd.isna(col):
+                    value = row[col]
+                    if not pd.isna(value):
+                        value = ""
+                    if "[" in str(row[col]):
+                        array = row[col].replace("[", "").replace("]", "").split(",")
+                        for element in array:
+                            copy_of_row = row.copy()        
+                            # modify the copy
+                            copy_of_row[col]= element 
+                            copy_of_row.name = copy_of_row.name + "_" + str(array.index(element))
+                            # insert the copy into the data frame at index row_index
+                            print(copy_of_row)
+                            #df.reset_index(inplace=True)
+                            df = df.append(copy_of_row, sort=True)
+                            made_new_row = True
+                        # remove the original row
+                        df = df.drop(df.index[row_index])
+                        break
+    return df.T
 
     
     
@@ -68,21 +76,29 @@ def generate_xml_cases(message_details_folder_path):
         base_path = paths.xmls_folder_path +"\\base\\base_" + name + ".xml"
         case_folder_path = make_message_case_folder(base_path,name)
         pd.set_option('display.max_rows', None)
-        df = pd.read_excel(path)
+        df = pd.read_excel(path, sheet_name='compressed_cases')
         df.style.hide_index()
         
-        #find the values file row 
-        values_file_row = df.iloc[:,0].tolist().index("values file")
-        value_file_df = df.iloc[[values_file_row]]
         
-        #remove the json specific part of the code 
-        df_col1_list = df.iloc[:,0].tolist()
-        first_nan_index = df_col1_list.index(np.nan)
-        last_row = len(df_col1_list)
-        df.drop(df.loc[first_nan_index:last_row].index, inplace=True)
-        df = pd.concat([df,value_file_df])
-        #transpose the grid to use the paths as columns and each message is now a row
-        df = df.T
-        create_messages(df,case_folder_path)
+        df = df[df[df.columns.tolist()[0]].notna()]
+        # last_row = len(df)
+        # #find the values file row 
+
+        
+        # #remove the json specific part of the code 
+        # df_col1_list = df.iloc[:,0].tolist()
+        # first_nan_index = df_col1_list.index(np.nan)
+        
+        # df.drop(df.loc[first_nan_index:last_row].index, inplace=True)
+        # #add the values file row
+        # df = pd.concat([df,value_file_df])
+        df = create_messages(df,case_folder_path)
+        print(df)
+        # save the new df in a new sheet of the excel file 
+        excel_path = message_details_folder_path + "\\" + excel
+        with pd.ExcelWriter(excel_path, engine='openpyxl', mode="a", if_sheet_exists='replace') as writer:
+            df.to_excel(writer, sheet_name='decompressed cases')
+
+        print("pause    ")
         
         
