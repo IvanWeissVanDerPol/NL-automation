@@ -87,7 +87,7 @@ def add_Tests(message_details_folder_path):
             list_of_tests2.append("")
             
         df["tests"] = list_of_tests
-        #adds empthy column to the excel file where user can decide if info should be in the json
+        #adds empty column to the excel file where user can decide if info should be in the json
         df['Add to Json'] = list_of_tests2
         #save the generated document
         path = message_details_folder_path + "\\" + file

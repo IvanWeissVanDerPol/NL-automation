@@ -22,12 +22,12 @@ def traverse_tree(node:complex_element ,listOLists,json_file):
         sub_json = json_file
     
     for cont in range (1,node.height+1):
-        dflevel = "L" + str(cont)    
-        listOLists[dflevel].append("")       
+        df_level = "L" + str(cont)    
+        listOLists[df_level].append("")       
 
-    dflevel = "L" + str(node.level)
-    listOLists[dflevel].pop()
-    listOLists[dflevel].append(node.complex_data.Name)       
+    df_level = "L" + str(node.level)
+    listOLists[df_level].pop()
+    listOLists[df_level].append(node.complex_data.Name)       
     listOLists["Type"].append(node.complex_data.Type)       
     listOLists["Cardinality"].append(node.complex_data.Cardinality)       
     listOLists["BaseType"].append(node.complex_data.Base_Type)       
@@ -58,7 +58,7 @@ def traverse_tree(node:complex_element ,listOLists,json_file):
 #make an excel for each xsd in the folder
 #open the folder and get the root from the xsd
 #initialize lists of list as empty this lists represent columns in the final excel
-#load the BS json file (buisnes logic or something)
+#load the BS json file (business logic or something)
 #save the excel
 def make_excels_from_xsd(folder_Of_xsd):
     folder_path = folder_Of_xsd
@@ -66,18 +66,18 @@ def make_excels_from_xsd(folder_Of_xsd):
     for file in folder:
         if file.endswith(".xsd"):
             file_path = folder_path + "\\" + file
-            done_prosesing_path = folder_path + "\\done\\" + file
+            done_processing_path = folder_path + "\\done\\" + file
             name = file_path.split(".")[0].rsplit("\\")[1]
             #generate the tree from the xsd
             root = xsd_converter_to_tree.get_tree(xsd_path=file_path)
             
-            path = paths.message_details_folder_path + "\\mesage_details_" + name + ".xlsx"
+            path = paths.message_details_folder_path + "\\message_details_" + name + ".xlsx"
             listOLists = {}
 
-            #initialize the list of list as empthy             
+            #initialize the list of list as empty             
             for cont in range (1,root.height+1):
-                dflevel = "L" + str(cont)    
-                listOLists[dflevel] = [] 
+                df_level = "L" + str(cont)    
+                listOLists[df_level] = [] 
             listOLists["Type"] = []
             listOLists["Cardinality"] = []
             listOLists["BaseType"] = []
@@ -96,6 +96,6 @@ def make_excels_from_xsd(folder_Of_xsd):
             writer = pd.ExcelWriter(path=path, engine='xlsxwriter',mode='w')
             df.to_excel(writer, sheet_name='Sheet1',index=False)
             writer.save()
-            shutil.move(file_path, done_prosesing_path)
+            shutil.move(file_path, done_processing_path)
             
 
