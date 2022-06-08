@@ -57,7 +57,7 @@ def create_messages(df,case_folder_path):
                             # insert the copy into the data frame at index row_index
                             print(copy_of_row)
                             #df.reset_index(inplace=True)
-                            df = df.append(copy_of_row, sort=True)
+                            df = df.append(copy_of_row)
                             made_new_row = True
                         # remove the original row
                         df = df.drop(df.index[row_index])
@@ -76,24 +76,12 @@ def generate_xml_cases(message_details_folder_path):
         base_path = paths.xmls_folder_path +"\\base\\base_" + name + ".xml"
         case_folder_path = make_message_case_folder(base_path,name)
         pd.set_option('display.max_rows', None)
-        df = pd.read_excel(path, sheet_name='compressed_cases')
+        df = pd.read_excel(path, sheet_name='compressed cases')
         df.style.hide_index()
-        
-        
-        df = df[df[df.columns.tolist()[0]].notna()]
-        # last_row = len(df)
-        # #find the values file row 
 
+        df = df[df[df.columns.tolist()[0]].notna()]
         
-        # #remove the json specific part of the code 
-        # df_col1_list = df.iloc[:,0].tolist()
-        # first_nan_index = df_col1_list.index(np.nan)
-        
-        # df.drop(df.loc[first_nan_index:last_row].index, inplace=True)
-        # #add the values file row
-        # df = pd.concat([df,value_file_df])
         df = create_messages(df,case_folder_path)
-        print(df)
         # save the new df in a new sheet of the excel file 
         excel_path = message_details_folder_path + "\\" + excel
         with pd.ExcelWriter(excel_path, engine='openpyxl', mode="a", if_sheet_exists='replace') as writer:
