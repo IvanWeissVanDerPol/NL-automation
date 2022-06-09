@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 from matplotlib.pyplot import pause
 import numpy as np
@@ -16,6 +17,32 @@ def printCompleteDf(df):
     pd.set_option("max_rows", None)
     pd.set_option("max_columns", None)
     print(df)
+    
+def add_lowecases_for_MRID(text,list_of_lower_cases_pos):
+    for pos in list_of_lower_cases_pos:
+        text.insert(pos,"-")
+    return text
+
+def make_messageID(string):
+    string = string.replace(" ", "_")
+    messageID = string.split("_")
+    aux_string = ""
+    for words in messageID:
+        wordsAUX = re.findall(r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)', words)
+        if len(wordsAUX) > 0:
+            words = wordsAUX
+            words = ''.join(words)
+            words = ''.join(c for c in words if c.isupper())
+        aux_string = aux_string + words
+    
+    messageID = "NLPROTOCOLTEST" + aux_string
+    messageID = list(messageID)
+    while len(messageID) < 32:
+        messageID.append("0")
+        
+    messageID = add_lowecases_for_MRID(messageID,[8,13,18,23])
+    messageID = ''.join(messageID)
+    return messageID
 
 def make_message_case_folder(path,test_message):
     test_case_path = path.rsplit("\\",1)[1]
@@ -43,26 +70,30 @@ def create_messages(df):
     while(made_new_row):
         made_new_row = False
         for row in df.iterrows():
-            row = row[1]
-            row_index = list(df.index).index(row.name)
-            #iterate across the columns and print the values
-            for col in df.columns:
-                if not pd.isna(col):
-                    value = row[col]
-                    if not pd.isna(value):
-                        value = ""
-                    if "[" in str(row[col]):
-                        array = row[col].replace("[", "").replace("]", "").split(",")
-                        for element in array:
-                            copy_of_row = row.copy()        
-                            # modify the copy
-                            copy_of_row[col]= element 
-                            copy_of_row.name = copy_of_row.name + "_" + str(array.index(element))
-                            df = df.append(copy_of_row)
-                            made_new_row = True
-                        # remove the original row
-                        df = df.drop(df.index[row_index])
-                        break
+            message_name = row[0]
+            if message_name != "DEFAULT VALUES":
+                row = row[1]
+                row_index = list(df.index).index(row.name)
+                #iterate across the columns and print the values
+                for col in df.columns:
+                    if not pd.isna(col):
+                        value = row[col]
+                        if value == "Generate_message_ID":
+                            row[col] = make_messageID(message_name)
+                        if not pd.isna(value):
+                            value = ""
+                        if "[" in str(row[col]):
+                            array = row[col].replace("[", "").replace("]", "").split(",")
+                            for element in array:
+                                copy_of_row = row.copy()        
+                                # modify the copy
+                                copy_of_row[col]= element 
+                                copy_of_row.name = copy_of_row.name + "_" + str(array.index(element))
+                                df = df.append(copy_of_row)
+                                made_new_row = True
+                            # remove the original row
+                            df = df.drop(df.index[row_index])
+                            break
     return df.T
 
     
@@ -198,4 +229,3 @@ def generate_xml_cases_from_decompressed_excel(message_details_folder_path):
                 xml_pretty_str = xml_pretty_str.replace('<?xml version="1.0" ?>\n', "")
                 with open(case_folder_path + "\\" + message_name + ".xml", "w") as file:
                     file.write(str(xml_pretty_str))
- 
