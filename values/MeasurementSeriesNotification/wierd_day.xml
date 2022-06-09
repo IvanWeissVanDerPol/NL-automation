@@ -1,4 +1,4 @@
-<ccma:MeasurementSeriesNotification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccma="urn:nedu:measurements:data:measurementseriesnotification:2:standard" xsi:schemaLocation="urn:nedu:measurements:data:measurementseriesnotification:2:standard MeasurementSeriesNotification_2p0.xsd">
+<ccma:MeasurementSeriesNotification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccma="urn:nedu:measurements:data:measurementseriesnotification:2:standard" xsi:schemaLocation="urn:nedu:measurements:data:measurementseriesnotification:2:standard MeasurementSeriesNotification.xsd">
 	<ccma:Detail_Series>
 		<ccma:Point>
 			<ccma:position>1</ccma:position>
@@ -1201,6 +1201,6 @@
 			<ccma:quantity>0</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>    
+		</ccma:Point>    		
 	</ccma:Detail_Series>
 </ccma:MeasurementSeriesNotification>

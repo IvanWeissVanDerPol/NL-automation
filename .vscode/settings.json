@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
         "isna"
+    ],
+    "xml.fileAssociations": [
+        {
+            "pattern": "**/ds_long.xml",
+            "systemId": "xsd/MeasurementSeriesNotification.xsd"
+        }
     ]
 }

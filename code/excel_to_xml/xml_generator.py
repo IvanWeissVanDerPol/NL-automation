@@ -15,8 +15,6 @@ from pandas.io.pytables import AppendableFrameTable
 sys.path[0] += '\\..'
 
 
-times = json.load(open(paths.times_json_path))
-DS_pints_path = json.load(open(paths.DS_path))
 list_of_xml_elements = []
 
 def get_xml_row_data(has_child_list,rows,col_list,previous_col,f,default_value_list):

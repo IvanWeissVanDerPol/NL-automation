@@ -1,4 +1,4 @@
-<ccma:MeasurementSeriesNotification>
+<ccma:MeasurementSeriesNotification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccma="urn:nedu:measurements:data:measurementseriesnotification:2:standard" xsi:schemaLocation="urn:nedu:measurements:data:measurementseriesnotification:2:standard MeasurementSeriesNotification_2p0.xsd">
 	<ccma:EDSNBusinessDocumentHeader>
 		<ccma:ContentHash>not_mapped</ccma:ContentHash>
 		<ccma:ConversationID>not_mapped</ccma:ConversationID>
@@ -81,4 +81,3 @@
 		</ccma:RestVolume_Quantity>
 	</ccma:Measurement_Series>
 </ccma:MeasurementSeriesNotification>
-
