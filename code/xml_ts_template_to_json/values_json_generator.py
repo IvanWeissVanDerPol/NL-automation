@@ -27,8 +27,11 @@ def values_json_generator(xml_path):
                 file_name = os.path.basename(file_path)
                 quantity = []
                 data = file.readlines()
-                #get all the values of the xml file
+                #TODO chose the block of detail series in reference of the direction
+                #get all the values of the xml file in the first block of detail series
                 for line in data:
+                    if re.search(r"</ccma:Detail_Series>", line):
+                        break
                     if re.search(r"<ccma:quantity>.*?</ccma:quantity>", line):
                         quantity.append(re.findall(r'\d+', line)[0])
                 #add the values to the json
@@ -40,4 +43,4 @@ def values_json_generator(xml_path):
         json.dump(json_data, outfile, indent=4)
 
 if __name__ == "__main__":
-    values_json_generator('../../values/')
+    values_json_generator('C:/Users/coraj/Documents/Internet Explorer/Universidad/work/NL-automation/values/')
