@@ -1,5 +1,6 @@
 import copy
 from email import message
+from genericpath import exists
 from lxml import etree
 from typing import ContextManager, Optional
 import pandas as pd 
@@ -14,8 +15,6 @@ from pandas.io.pytables import AppendableFrameTable
 sys.path[0] += '\\..'
 
 
-times = json.load(open(paths.times_json_path))
-DS_pints_path = json.load(open(paths.DS_path))
 list_of_xml_elements = []
 
 def get_xml_row_data(has_child_list,rows,col_list,previous_col,f,default_value_list):
@@ -24,9 +23,9 @@ def get_xml_row_data(has_child_list,rows,col_list,previous_col,f,default_value_l
         element = rows.pop(0)
         col = col_list.pop(0)
         default_value = default_value_list.pop(0)
-        if (default_value != "not_mapped" and default_value != "not_mapped and not used"):
+        #if (default_value != "not_mapped" and default_value != "not_mapped and not used"):
             #f.write("<ccma:"+element+">"+default_value+"</ccma:"+element+">")
-            write_xml_Row(has_child_list= has_child_list,has_child=has_child, col=col, col_list=col_list, element=element, previous_col= previous_col, rows=rows,f=f, default_value_list=default_value_list,default_value=default_value)
+        write_xml_Row(has_child_list= has_child_list,has_child=has_child, col=col, col_list=col_list, element=element, previous_col= previous_col, rows=rows,f=f, default_value_list=default_value_list,default_value=default_value)
 
 
 def write_xml_Row(has_child_list,rows,col_list,previous_col,has_child,element,col,f,default_value, default_value_list):
@@ -75,10 +74,12 @@ def write_xml_Row(has_child_list,rows,col_list,previous_col,has_child,element,co
 def create_xml(has_child_list,rows,col_list,name,default_value_list):
     #gets the rows data and writes it to the xml
     path = paths.xmls_folder_path +"\\base\\base_" + name + ".xml"
-    os.remove(path)
+    if os.path.exists(path):
+        os.remove(path)
     f = open(file=path,mode="a")
     get_xml_row_data(has_child_list=has_child_list, col_list=col_list,rows=rows,previous_col=0,f=f,default_value_list=default_value_list)
     f.close()
+    
     # read the file and remove duplicate lines
     f = open(file=path,mode="r")
     lines =f.read()
@@ -117,7 +118,7 @@ def get_base_Xml(excel_name):
     for excel in folder:
         if name in excel:
             path = message_details_folder_path + "\\" + excel
-            df = pd.read_excel(path)
+            df = pd.read_excel(path, sheet_name="compressed cases")
             element_path_list = list(df['XML ELEMENT PATH'])
             default_element_values = list(df['DEFAULT VALUES'])
             

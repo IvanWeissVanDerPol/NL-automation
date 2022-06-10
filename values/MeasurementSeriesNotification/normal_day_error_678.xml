@@ -1,5 +1,13 @@
 <ccma:MeasurementSeriesNotification xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ccma="urn:nedu:measurements:data:measurementseriesnotification:2:standard" xsi:schemaLocation="urn:nedu:measurements:data:measurementseriesnotification:2:standard MeasurementSeriesNotification_2p0.xsd">
 	<ccma:Detail_Series>
+		<ccma:resolution>PT15M</ccma:resolution>
+		<ccma:Product>
+			<ccma:identification>8716867000030</ccma:identification>
+			<ccma:measureUnit>KWH</ccma:measureUnit>
+		</ccma:Product>
+		<ccma:FlowDirection>
+			<ccma:direction>E17</ccma:direction>
+		</ccma:FlowDirection>
 		<ccma:Point>
 			<ccma:position>1</ccma:position>
 			<ccma:quantity>0</ccma:quantity>
@@ -8,7 +16,7 @@
 		</ccma:Point>	
 		<ccma:Point>
 			<ccma:position>2</ccma:position>
-			<ccma:quantity>375</ccma:quantity>
+			<ccma:quantity>-375</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
 		</ccma:Point>       
@@ -576,32 +584,16 @@
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
 		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>97</ccma:position>
-			<ccma:quantity>60000</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>98</ccma:position>
-			<ccma:quantity>60375</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>99</ccma:position>
-			<ccma:quantity>60750</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>100</ccma:position>
-			<ccma:quantity>61125</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
 	</ccma:Detail_Series>
 	<ccma:Detail_Series>
+		<ccma:resolution>PT15M</ccma:resolution>
+		<ccma:Product>
+			<ccma:identification>8716867000030</ccma:identification>
+			<ccma:measureUnit>KWH</ccma:measureUnit>
+		</ccma:Product>
+		<ccma:FlowDirection>
+			<ccma:direction>E17</ccma:direction>
+		</ccma:FlowDirection>
 		<ccma:Point>
 			<ccma:position>1</ccma:position>
 			<ccma:quantity>0</ccma:quantity>
@@ -1177,30 +1169,6 @@
 			<ccma:quantity>0</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>97</ccma:position>
-			<ccma:quantity>0</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>98</ccma:position>
-			<ccma:quantity>0</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>99</ccma:position>
-			<ccma:quantity>0</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>100</ccma:position>
-			<ccma:quantity>0</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>    		
+		</ccma:Point>    
 	</ccma:Detail_Series>
-</ccma:MeasurementSeriesNotification>
+</ccma:MeasurementSeriesNotification>			
