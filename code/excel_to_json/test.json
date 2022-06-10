@@ -1,103 +1,100 @@
 {
     "config": {
-        "marketparties": [{
+        "market_paries": [
+            {
                 "name": "supplier E",
-                "eancode": "8716948001031",
-                "marketparty": "balance supplier electricity"
+                "eancode": "8716948001031"
             },
             {
                 "name": "reciver",
-                "eancode": "8716948001000",
-                "marketparty": "balance responsible party"
+                "eancode": "8716948001000"
             },
             {
                 "name": "sender",
-                "eancode": "8716948001017",
-                "marketparty": "metered data responsible party"
+                "eancode": "8716948001017"
             },
             {
                 "name": "operator",
-                "eancode": "8716948001024",
-                "marketparty": "8716948001024"
+                "eancode": "8716948001024"
             },
             {
                 "name": "operator_notRGO",
-                "eancode": "",
-                "marketparty": "8716948001024"
+                "eancode": ""
             },
             {
                 "name": "belen sender",
-                "eancode": "123123132",
-                "marketparty": "metered data responsible party"
+                "eancode": "123123132"
             }
         ],
-        "netareas": [{
+        "net_areas": [
+            {
                 "name": "IP_TEST_NET_AREA",
                 "net_area_Code": "871692100000010000",
                 "product": "electricity",
-                "marketparty_operator_code": "8716948001024",
-                "top_net_area_EAN": "none"
+                "marketparty_operator_code": "8716948001024"
             },
             {
                 "name": "IP_TEST_NET_AREA",
                 "net_area_Code": "871692100000010000",
                 "product": "electricity",
-                "marketparty_operator_code": "8716948001024",
-                "top_net_area_EAN": "none"
+                "marketparty_operator_code": "8716948001024"
             },
             {
                 "name": "IP_TEST_NET_AREA",
                 "net_area_Code": "871692100000010000",
                 "product": "",
-                "marketparty_operator_code": "8716948001024",
-                "top_net_area_EAN": "none"
+                "marketparty_operator_code": "8716948001024"
             },
             {
                 "name": "IP_TEST_NET_AREA",
                 "net_area_Code": "871692100000010000",
                 "product": "water",
-                "marketparty_operator_code": "8716948001024",
-                "top_net_area_EAN": "none"
+                "marketparty_operator_code": "8716948001024"
             }
         ],
-        "gridpoints": [{
-            "name": "IP_NL_RNO gridpoint",
-            "EANCODE": "871687120000020000",
-            "netarea_code": "871692100000010000",
-            "product": "electricity",
-            "mp_operator_code": "8716948001024"
-        }],
-        "supplyContracts": [{
-            "gridpoint_code": "871687120000020000",
-            "gridpoint_startDate": "1/3/2021",
-            "gridpoint_endDate": "2/3/2021",
-            "SupplyerEan": "8716948001031",
-            "BalanceEanReciver": "8716948001000",
-            "MeteredEanSender": "8716948001017"
-        }],
-        "connections": [{
-            "gridpoint_code": "871687120000020000",
-            "gridpoint_startDate": "1/3/2021",
-            "gridpoint_endDate": "2/3/2021",
-            "consumption_category_name": "Wholesale",
-            "Metering_method_name": "Continuous",
-            "Direction_name": "Consumption",
-            "Physical_state_name": "Connected",
-            "Conection_physical_capacity_name": "1x6A",
-            "Conection_physical_capacity_type": 0,
-            "net_area_Code": "871692100000010000"
-        }]
+        "grid_points": [
+            {
+                "name": "IP_NL_RNO gridpoint",
+                "EANCODE": "871687120000020000",
+                "netarea_code": "871692100000010000",
+                "product": "electricity"
+            }
+        ],
+        "supply_contracts": [
+            {
+                "gridpoint_code": "871687120000020000",
+                "gridpoint_startDate": "1/3/2021",
+                "gridpoint_endDate": "2/3/2021",
+                "SupplyerEan": "8716948001031",
+                "BalanceEanReciver": "8716948001000"
+            }
+        ],
+        "connections": [
+            {
+                "gridpoint_code": "871687120000020000",
+                "gridpoint_startDate": "1/3/2021",
+                "gridpoint_endDate": "2/3/2021",
+                "consumption_category_name": "Wholesale",
+                "Metering_method_name": "Continuous",
+                "Direction_name": "Consumption",
+                "Physical_state_name": "Connected",
+                "Conection_physical_capacity_name": "1x6A",
+                "Conection_physical_capacity_type": 0
+            }
+        ]
     },
-    "xmlData": [{
-        "ExpectedErrorCode": "direcion de la carpeta",
-        "messageID": "NLPROTOC-OLER-ROR0-0000-000000000000",
-        "XMLName": "FALTA_NOMBRE",
-        "XMLFolderPath": "FALTA_RUTA",
-        "timeSerie": "0,375,750,1125,2500,2875,3250,3625,5000,5375,5750,6125,7500,7875,8250,8625,10000,10375,10750,11125,12500,12875,13250,13625,15000,15375,15750,16125,17500,17875,18250,18625,20000,20375,20750,21125,22500,22875,23250,23625,25000,25375,25750,26125,27500,27875,28250,28625,30000,30375,30750,31125,32500,32875,33250,33625,35000,35375,35750,36125,37500,37875,38250,38625,40000,40375,40750,41125,42500,42875,43250,43625,45000,45375,45750,46125,47500,47875,48250,48625,50000,50375,50750,51125,52500,52875,53250,53625,55000,55375,55750,56125,57500,57875,58250,58625",
-        "startDate": "2021-03-01T22:00:00Z",
-        "endDate": "2021-03-02T22:00:00Z",
-        "reciver": "8716948001000",
-        "gridpoint": "871687120000020002",
-        "direction": "E18"
-    }]
+    "xmlData": [
+        {
+            "ExpectedErrorCode": 661,
+            "messageID": "Generate_message_ID",
+            "XMLName": "generate_message_name",
+            "XMLFolderPath": "generate_message_path",
+            "timeSerie": "0,375,750,1125,2500,2875,3250,3625,5000,5375,5750,6125,7500,7875,8250,8625,10000,10375,10750,11125,12500,12875,13250,13625,15000,15375,15750,16125,17500,17875,18250,18625,20000,20375,20750,21125,22500,22875,23250,23625,25000,25375,25750,26125,27500,27875,28250,28625,30000,30375,30750,31125,32500,32875,33250,33625,35000,35375,35750,36125,37500,37875,38250,38625,40000,40375,40750,41125,42500,42875,43250,43625,45000,45375,45750,46125,47500,47875,48250,48625,50000,50375,50750,51125,52500,52875,53250,53625,55000,55375,55750,56125,57500,57875,58250,58625",
+            "startDate": "2021-03-02-22:00:00",
+            "endDate": "2021-03-01-22:00:00",
+            "reciver": "8716948001000",
+            "gridpoint": "871687120000020002",
+            "direction": "load_from_file_1"
+        }
+    ]
 }

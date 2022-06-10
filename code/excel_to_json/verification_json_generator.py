@@ -16,7 +16,7 @@ def get_json_xmlData(row, values_json_path):
         "timeSerie": time_series,
         "startDate": row['startDate'],
         "endDate": row['endDate'],
-        "reciver": row['reciver'],
+        "reciver": row['receiver'],
         "gridpoint": row['grid_point'],
         "direction": row['direction']
     }
@@ -64,9 +64,28 @@ def create_json_array(df):
         json_array.append(dict_data) 
     return json_array   
 
-def get_config_json_from_excel_EBASE_Struct(row, excel_path):
-    list_struct = [f for f in row.axes[0].tolist() if f.startswith('struct_')]
-    df = pd.read_excel(excel_path, na_filter = False)
+def get_config_json_from_excel_EBASE_Struct(row, struct_df):
+    df_col1_list = struct_df.iloc[:, 0].tolist()
+    list_struct = []
+    for struct in row.axes[0].tolist():
+        if "struct_" in struct:
+            struct = struct.replace("struct_", "")
+            list_struct.append(struct)
+    config_json = {}
+    for element in list_struct:
+        row_element_array = row["struct_"+element].split(", ")
+        element_index = int(df_col1_list.index(element))
+        element_end_index = int(df_col1_list[element_index + 1]) + element_index
+        element_struct_df = get_sub_df_transposed_struct(struct_df, element_index, element_end_index)
+        aux_column_list = element_struct_df.columns.tolist()
+        aux_index_list = element_struct_df.index.tolist()
+        aux_column_list = [x for x in aux_column_list if x.isdigit()]
+        aux_index_list = [x for x in aux_index_list if x not in row_element_array]
+        for number_col in aux_column_list:
+            element_struct_df.drop(number_col, axis=1, inplace=True)
+        for row_element_name in aux_index_list:
+            element_struct_df.drop(row_element_name, inplace=True)
+        config_json[element] = create_json_array(element_struct_df)
     #TODO: ayuda
     return config_json
 
@@ -94,7 +113,10 @@ def get_config_json_from_excel_EBASE_Struct1(row, excel_path):
     config_json['connections'] = create_json_array(connections_df)
 
     return config_json
+
+
 folder_path = 'excel/message_details'
+struct_excel_path = 'excel/EBASE Struct.xlsx'
 list_excels = [f for f in os.listdir(folder_path) if not f.startswith('~')]
 list_excels = [f for f in list_excels if f.endswith('.xlsx')]
 for excel_file in list_excels:
@@ -103,12 +125,13 @@ for excel_file in list_excels:
     df_info_json = get_df_from_excel_base(excel_path)
     values_json_path = "values/" + message_name + "/values.json"
     #for para cada columna del json
+    struct_df = pd.read_excel(struct_excel_path, na_filter = False)
     for row in df_info_json.iterrows():
         message_name = row[0]
         if message_name != 'DEFAULT VALUES':
             row = row[1]
             json_xml_data = [get_json_xmlData(row, values_json_path)]
-            json_config = get_config_json_from_excel_EBASE_Struct(row, 'excel/EBASE Struct.xlsx')
+            json_config = get_config_json_from_excel_EBASE_Struct(row, struct_df)
             validation_json = {
                 'config': json_config,
                 'xmlData': json_xml_data
