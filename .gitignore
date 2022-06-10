@@ -137,10 +137,8 @@ dmypy.json
 # python debug symbols
 cython_debug/
 .gitignore
-excel/*
+
 xsd/*
 xml/*
 xml/base/*
-excel/*
-*.xlsx
-!spec/*.xlsx
+
