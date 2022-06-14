@@ -105,7 +105,6 @@ def create_messages(path):
 def load_df_cells(path):
     df = pd.read_excel(path, sheet_name='compressed cases')
     df = df.T
-    # df.style.hide_index()
     df.style.hide(axis= 'index')
     df.columns = df.iloc[0]
     df = df[1:]
