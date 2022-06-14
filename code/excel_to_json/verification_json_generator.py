@@ -102,6 +102,7 @@ def generate_json(folder_path, struct_excel_path):
     list_excels = [f for f in os.listdir(folder_path) if not f.startswith('~')]
     list_excels = [f for f in list_excels if f.endswith('.xlsx')]
     for excel_file in list_excels:
+        excel_name = excel_file.replace(".xlsx", "").rsplit("_", 1)[1]
         message_name = excel_file.rsplit('_',1)[1].split('.')[0]
         excel_path = folder_path + '/' + excel_file
         df_info_json = get_df_from_excel_base(excel_path, 'decompressed cases')
@@ -118,6 +119,6 @@ def generate_json(folder_path, struct_excel_path):
                     'config': json_config,
                     'xmlData': json_xml_data
                 }
-                json_path = 'xml/cases/' + message_name + '.json'
+                json_path = 'xml/cases/' + excel_name + '/' + message_name + '.json'
                 with open(json_path, 'w') as outfile:
                         json.dump(validation_json, outfile, indent=4)
