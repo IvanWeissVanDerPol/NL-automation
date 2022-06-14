@@ -20,11 +20,19 @@ def get_json_xmlData(row, values_json_path):
         direction = values_json_data[row['values file'] + '_direction']
         direction = direction.split(",")[direction_block_nr]
 
+    #get the path of the current file and transform it into a list of folders, then remove the last 2 folder, so now the last folder is NL-automation
+    folder_path_list = os.path.dirname(__file__).split("\\")
+    folder_path_list = folder_path_list[:-2]
+    #get the path of the message from the excel and transform it into a list of folders, add message path to the full path and transform it into a string
+    message_path_list = row['message path'].split("\\")
+    message_path_list = folder_path_list + message_path_list
+    message_path = "\\".join(message_path_list)
+
     xml_data = {
         "ExpectedErrorCode": row['error code'],
         "messageID": row['Message ID'],
         "XMLName": row['message name'],
-        "XMLFolderPath": row['message path'],
+        "XMLFolderPath": message_path,
         "timeSerie": time_series,
         "startDate": row['startDate'],
         "endDate": row['endDate'],
@@ -101,7 +109,6 @@ def get_config_json_from_excel_EBASE_Struct(row, struct_df):
             element_struct_df.drop(row_element_name, inplace=True)
         #create the dictionary only with the elements that are in the message details excel
         config_json[element] = create_json_array(element_struct_df)
-    #TODO: ayuda
     return config_json
 
 def generate_json(folder_path, struct_excel_path):
@@ -135,4 +142,5 @@ def generate_json(folder_path, struct_excel_path):
                 with open(json_path, 'w') as outfile:
                         json.dump(validation_json, outfile, indent=4)
 
-generate_json('excel/message_details', 'excel/EBASE Struct.xlsx')
+if __name__ == "__main__":
+    generate_json('excel/message_details', 'excel/EBASE Struct.xlsx')
