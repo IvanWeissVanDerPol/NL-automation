@@ -3,7 +3,8 @@ import re
 import shutil
 from matplotlib.pyplot import pause
 import numpy as np
-import pandas as pd 
+import pandas as pd
+
 from os import listdir 
 import paths
 from bs4 import BeautifulSoup
@@ -104,7 +105,8 @@ def create_messages(path):
 def load_df_cells(path):
     df = pd.read_excel(path, sheet_name='compressed cases')
     df = df.T
-    df.style.hide_index()
+    # df.style.hide_index()
+    df.style.hide(axis= 'index')
     df.columns = df.iloc[0]
     df = df[1:]
     columns_list = df.columns.tolist()
@@ -154,7 +156,7 @@ def generate_xmls(message_details_folder_path,excel):
 
     
     df = df.T
-    df.style.hide_index()
+    df.style.hide(axis= 'index')
     df.columns = df.iloc[0]
     df = df[1:]
     #each row is a message  
