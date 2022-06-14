@@ -8,6 +8,18 @@ def get_json_xmlData(row, values_json_path):
     values_json_data = json.load(values_json_file)
     values_json_file.close()
     time_series = values_json_data[row['values file']]
+    direction = row['direction']
+    if direction.startswith("load_from_file"):
+        direction_block_nr = direction.rsplit("_", 1)[1]
+        if direction_block_nr.isdigit():
+            direction_block_nr = int(direction_block_nr) - 1
+        else:
+            print("Error: direction = load_from_file_ does not end in a number")
+            print("set default = 1 (load_from_file_1)")
+            direction_block_nr = 1
+        direction = values_json_data[row['values file'] + '_direction']
+        direction = direction.split(",")[direction_block_nr]
+
     xml_data = {
         "ExpectedErrorCode": row['error code'],
         "messageID": row['Message ID'],
@@ -18,7 +30,7 @@ def get_json_xmlData(row, values_json_path):
         "endDate": row['endDate'],
         "reciver": row['receiver'],
         "gridpoint": row['grid_point'],
-        "direction": row['direction']
+        "direction": direction
     }
     return xml_data
 
@@ -122,3 +134,5 @@ def generate_json(folder_path, struct_excel_path):
                 json_path = 'xml/cases/' + excel_name + '/' + message_name + '.json'
                 with open(json_path, 'w') as outfile:
                         json.dump(validation_json, outfile, indent=4)
+
+generate_json('excel/message_details', 'excel/EBASE Struct.xlsx')
