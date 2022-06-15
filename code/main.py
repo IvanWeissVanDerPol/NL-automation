@@ -8,7 +8,6 @@ from excel_to_xml.xml_generator import make_base_xmls
 import paths 
 
 stay_in_program = True
-values_json_generator(paths.times_txt_paths)
 while stay_in_program:
     print("chose what to do:")
     print("[1] make excels from xsd")    #makes an excel tat contains the xsd details here you put the default values and all te test cases (['Correct_Value', 'Invalid_Value', 'Empty_Value', 'Missing_Element']) and the rules for each element
@@ -16,8 +15,6 @@ while stay_in_program:
     print("[3] make xmls and jsons")
     print("[any] exit")
     case = input()
-    # case = "1"
-#    case = ""
     if case == "1":
         make_excels_from_xsd(folder_Of_xsd=paths.xsd_folder_path) # makes a base excel with the structure of the xsd
     elif case == "2":
@@ -30,6 +27,7 @@ while stay_in_program:
         if sure == "1":
             make_base_xmls(message_details_folder_path=paths.message_details_folder_path)
     elif case == "3":
+        values_json_generator(paths.times_txt_paths)
         generate_xml_cases_from_decompressed_excel(message_details_folder_path=paths.message_details_folder_path)
         generate_json(folder_path=paths.message_details_folder_path, struct_excel_path=paths.struct_excel_path)
     else:

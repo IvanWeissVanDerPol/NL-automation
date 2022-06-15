@@ -592,7 +592,7 @@
 			<ccma:measureUnit>KWH</ccma:measureUnit>
 		</ccma:Product>
 		<ccma:FlowDirection>
-			<ccma:direction>E17</ccma:direction>
+			<ccma:direction>E18</ccma:direction>
 		</ccma:FlowDirection>
 		<ccma:Point>
 			<ccma:position>1</ccma:position>

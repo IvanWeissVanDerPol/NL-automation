@@ -66,17 +66,14 @@ def make_excels_from_xsd(folder_Of_xsd):
 
             df = pd.DataFrame(data=listOLists)
             writer = pd.ExcelWriter(path=path, engine='xlsxwriter',mode='w')
-            df.to_excel(writer, sheet_name='Sheet1',index=False)
+            df.to_excel(writer, sheet_name='compressed cases',index=False)
             writer.save()
-            add_paths(paths.message_details_folder_path)
-            shutil.move(file_path, done_processing_path)
+            add_paths(path)
+            # shutil.move(file_path, done_processing_path)
             
 
-def add_paths(message_details_folder_path):
-    folder = listdir(message_details_folder_path)
-    for excel in folder:
-        path = message_details_folder_path + "\\" + excel
-        df = pd.read_excel(path)                                    #get the excel file you want to process
+def add_paths(excel_path):
+        df = pd.read_excel(excel_path)                                    #get the excel file you want to process
         columns=list(df.columns.values)
         #read the rows
         element_path = {}
@@ -121,6 +118,6 @@ def add_paths(message_details_folder_path):
         list_of_xml_elements_paths_strings = list_of_xml_elements_paths_strings + json_info
         df = pd.DataFrame(list_of_xml_elements_paths_strings, columns=['XML ELEMENT PATH'])
         df["DEFAULT VALUES"] = ""
-        writer = pd.ExcelWriter(path=path, engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Sheet1',index=False,columns = ['XML ELEMENT PATH','DEFAULT VALUES'])
+        writer = pd.ExcelWriter(path=excel_path, engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='compressed cases',index=False,columns = ['XML ELEMENT PATH','DEFAULT VALUES'])
         writer.save()
