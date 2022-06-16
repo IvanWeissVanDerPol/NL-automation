@@ -60,6 +60,7 @@ def make_message_case_folder(path,test_message):
     return test_folder
 
 def create_messages(path):
+    excel_name = path.rsplit("\\",1)[1].rsplit("_",1)[1].replace(".xlsx", "")
     df = pd.read_excel(path, sheet_name='compressed cases')
     df = df[df[df.columns.tolist()[0]].notna()]
     df = df.T
@@ -83,7 +84,8 @@ def create_messages(path):
                     if not pd.isna(col):
                         value = row[col]
                         if value == "Generate_message_ID":
-                            row[col] = make_messageID(message_name)
+                            message_ID_base = excel_name + " " + message_name 
+                            row[col] = make_messageID(message_ID_base)
                         if not pd.isna(value):
                             value = ""
                         if "[" in str(row[col]):

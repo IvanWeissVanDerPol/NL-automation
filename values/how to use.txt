@@ -1,0 +1,16 @@
+step 1
+    set the values for the series in the second column
+step 2 
+    copy the generated string to sublime text 3
+step 3
+    search or all " 
+step 4
+    press delete and then  Shift+tab until it looks like 
+<ccma:Point>
+    <ccma:position>1</ccma:position>
+    <ccma:quantity>0</ccma:quantity>
+    <ccma:origin>MSR</ccma:origin>
+    <ccma:validationStatus>VLD</ccma:validationStatus>
+</ccma:Point>
+step 5 
+copy values to template 

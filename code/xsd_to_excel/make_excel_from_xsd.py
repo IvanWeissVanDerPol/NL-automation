@@ -114,7 +114,7 @@ def add_paths(excel_path):
         for string in strings_to_remove:
             list_of_xml_elements_paths_strings.remove(string)
             
-        json_info = ["","json info","message path", "message name", "values file", "error code", "Message ID", "startDate", "endDate", "receiver", "grid_point", "direction", "timeSeries", "struct", "market_paries", "net areas", "grid_points", "supplyContracts", "connections"]    
+        json_info = ["","info para json", "message path", "message name", "values file", "error code", "Message ID", "startDate", "endDate", "receiver", "grid_point", "direction", "timeSeries", "struct", "struct_market_paries", "struct_net_areas", "struct_grid_points", "struct_supply_contracts", "struct_connections"]    
         list_of_xml_elements_paths_strings = list_of_xml_elements_paths_strings + json_info
         df = pd.DataFrame(list_of_xml_elements_paths_strings, columns=['XML ELEMENT PATH'])
         df["DEFAULT VALUES"] = ""
