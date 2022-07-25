@@ -142,3 +142,5 @@ xsd/*
 xml/*
 xml/base/*
 
+worksheet
+/values

@@ -116,7 +116,7 @@ def load_df_cells(path):
         row = row[1]
         if message_name != "DEFAULT VALUES":
             for col in columns_list:
-                if not pd.isna(row[col]):
+                if not pd.isna(col):
                     if "copy_from" in str(row[col]):
                         cell_value = row[col]
                         cell_value = cell_value.replace("copy_from_", "")
