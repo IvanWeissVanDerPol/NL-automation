@@ -1,13 +1,22 @@
+import re
+from tracemalloc import start
 import pandas as pd
 import json
 import numpy as np 
 import os
+from datetime import datetime, timedelta
+
 
 def get_json_xmlData(row, values_json_path):
     values_json_file = open(values_json_path, "r")
     values_json_data = json.load(values_json_file)
     values_json_file.close()
     time_series = values_json_data[row['values file']]
+    time_series = list(map(int, time_series.split(",")))
+    time_series = list(map(str, np.multiply(time_series,4)))
+    time_series = ",".join(time_series)
+    
+
     direction = row['direction']
     if direction.startswith("load_from_file"):
         direction_block_nr = direction.rsplit("_", 1)[1]
@@ -27,6 +36,27 @@ def get_json_xmlData(row, values_json_path):
     message_path_list = row['message path'].split("\\")
     message_path_list = folder_path_list + message_path_list
     message_path = "\\".join(message_path_list)
+    
+    pattern = re.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}")
+    
+
+    
+    start_date = row['startDate'].rsplit("-",1)[0]
+    if(pattern.match(start_date)):
+        dateTimeFormat = '%Y-%m-%d'
+    else: 
+        dateTimeFormat = '%d-%m-%Y'
+    start_date = datetime.strptime(start_date, dateTimeFormat) + timedelta(days=1)
+    start_date = start_date.strftime('%Y-%m-%d-%H:%M:%S')
+    
+    end_date = row['endDate'].rsplit("-",1)[0]
+    if(pattern.match(end_date)):
+        dateTimeFormat = '%Y-%m-%d'
+    else: 
+        dateTimeFormat = '%d-%m-%Y'
+    end_date = datetime.strptime(end_date, dateTimeFormat) + timedelta(hours=23 , minutes=45)
+    end_date = end_date.strftime('%Y-%m-%d-%H:%M:%S')
+    
 
     xml_data = {
         "ExpectedErrorCode": row['error code'],
@@ -34,8 +64,8 @@ def get_json_xmlData(row, values_json_path):
         "XMLName": row['message name'],
         "XMLFolderPath": message_path,
         "timeSerie": time_series,
-        "startDate": row['startDate'],
-        "endDate": row['endDate'],
+        "startDate": start_date,
+        "endDate": end_date,
         "reciver": row['receiver'],
         "gridpoint": row['grid_point'],
         "direction": direction
@@ -126,7 +156,7 @@ def generate_json(folder_path, struct_excel_path):
         excel_path = folder_path + '/' + excel_file
         df_info_json = get_df_from_excel_base(excel_path, 'decompressed cases')
         values_json_path = "values/" + message_name + "/values.json"
-        #for para cada columna del json
+        #for each column from the json
         struct_df = pd.read_excel(struct_excel_path, na_filter = False)
         for row in df_info_json.iterrows():
             message_name = row[0]
@@ -138,7 +168,7 @@ def generate_json(folder_path, struct_excel_path):
                     'config': json_config,
                     'xmlData': json_xml_data
                 }
-                json_path = 'xml/cases/' + excel_name + '/' + message_name + '.json'
+                json_path = 'xml/cases/' + excel_name + '/' +  re.sub('[^A-Z]', '', excel_name) + " " + message_name + '.json'
                 with open(json_path, 'w') as outfile:
                         json.dump(validation_json, outfile, indent=4)
 

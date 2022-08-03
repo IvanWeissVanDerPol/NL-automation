@@ -118,10 +118,9 @@ def load_df_cells(path):
             for col in columns_list:
                 if not pd.isna(col):
                     if "copy_from" in str(row[col]):
-                        cell_value = row[col]
-                        cell_value = cell_value.replace("copy_from_", "")
+                        cell_value = str(row[col]).replace("copy_from_", "")
                         if cell_value in columns_list:
-                            cell_value = row[cell_value]
+                            cell_value = str(row[cell_value])
                             if "T" in cell_value:
                                 cell_value = cell_value.replace("T", "-")
                                 cell_value = cell_value.replace("Z", "")
@@ -163,11 +162,12 @@ def generate_xmls(message_details_folder_path,excel):
     #each row is a message  
     #make a copy of the base xml file and modify it
     for row in df.iterrows():
+        file_name = re.sub('[^A-Z]', '', case_name) + " " + row[0]
         message_name = row[0]
-        time_series_parrent_node = []
+        time_series_parent_node = []
         if message_name != "DEFAULT VALUES":
-            shutil.copyfile(base_path, case_folder_path + "\\" + message_name + ".xml")
-            with open(case_folder_path + "\\" + message_name + ".xml", "r") as file:
+            shutil.copyfile(base_path, case_folder_path + "\\" + file_name + ".xml")
+            with open(case_folder_path + "\\" + file_name + ".xml", "r") as file:
                 data = file.read()
             Bs_data = BeautifulSoup(data, "xml",)
             row = row[1]
@@ -176,15 +176,15 @@ def generate_xmls(message_details_folder_path,excel):
             for col in row.index:
                 if "load_from_values_file" in str(row[col]):
                     aux_col = col.rsplit("/",1)[0]
-                    if aux_col not in time_series_parrent_node:
-                        time_series_parrent_node.append(aux_col)
+                    if aux_col not in time_series_parent_node:
+                        time_series_parent_node.append(aux_col)
                 if row[col] != "not_mapped":
                     if "/" in col:
                         element_name_arr = col.rsplit("/")
                         xml_element = Bs_data
                         for element_name in element_name_arr:
                             xml_element = xml_element.find(element_name)
-                        xml_element.string = row[col]
+                        xml_element.string = str(row[col])
             #store the data and remove unused tags
             data = str(Bs_data)
             data = data.split("\n")
@@ -246,14 +246,14 @@ def generate_xmls(message_details_folder_path,excel):
             xml_pretty_str = xml.toprettyxml()
             xml_pretty_str = xml_pretty_str.replace('<?xml version="1.0" ?>\n', "")
             
-            with open(case_folder_path + "\\" + message_name + ".xml", "w") as file:
+            with open(case_folder_path + "\\" + file_name + ".xml", "w") as file:
                 file.write(str(xml_pretty_str))
             original_row = original_df[message_name]
             original_df_index_list = original_df[original_df.columns.tolist()[0]].values.tolist()
             message_name_index = original_df_index_list.index('message name')
             message_path_index = original_df_index_list.index('message path')
             if "generate" in original_row[message_name_index]:
-                original_row[message_name_index] = message_name + ".xml"
+                original_row[message_name_index] = file_name + ".xml"
             if "generate" in original_row[message_path_index]:
                 original_row[message_path_index] = case_folder_path
             

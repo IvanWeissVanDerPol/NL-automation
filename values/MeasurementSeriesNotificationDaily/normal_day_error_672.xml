@@ -9,6 +9,12 @@
 			<ccma:direction>E17</ccma:direction>
 		</ccma:FlowDirection>
 		<ccma:Point>
+			<ccma:position>2</ccma:position>
+			<ccma:quantity>375</ccma:quantity>
+			<ccma:origin>MSR</ccma:origin>
+			<ccma:validationStatus>VLD</ccma:validationStatus>
+		</ccma:Point>       
+		<ccma:Point>
 			<ccma:position>1</ccma:position>
 			<ccma:quantity>0</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
@@ -17,12 +23,6 @@
 		<ccma:Point>
 			<ccma:position>3</ccma:position>
 			<ccma:quantity>750</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>       
-		<ccma:Point>
-			<ccma:position>2</ccma:position>
-			<ccma:quantity>375</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
 		</ccma:Point>       
@@ -595,17 +595,17 @@
 			<ccma:direction>E18</ccma:direction>
 		</ccma:FlowDirection>
 		<ccma:Point>
-			<ccma:position>1</ccma:position>
-			<ccma:quantity>0</ccma:quantity>
-			<ccma:origin>MSR</ccma:origin>
-			<ccma:validationStatus>VLD</ccma:validationStatus>
-		</ccma:Point>	
-		<ccma:Point>
 			<ccma:position>2</ccma:position>
 			<ccma:quantity>0</ccma:quantity>
 			<ccma:origin>MSR</ccma:origin>
 			<ccma:validationStatus>VLD</ccma:validationStatus>
 		</ccma:Point>       
+		<ccma:Point>
+			<ccma:position>1</ccma:position>
+			<ccma:quantity>0</ccma:quantity>
+			<ccma:origin>MSR</ccma:origin>
+			<ccma:validationStatus>VLD</ccma:validationStatus>
+		</ccma:Point>	
 		<ccma:Point>
 			<ccma:position>3</ccma:position>
 			<ccma:quantity>0</ccma:quantity>

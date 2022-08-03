@@ -66,7 +66,7 @@ def find_type(simple_Element_List,node_type):
                 return element
     return None
 
-#loads all values except children and parrent
+#loads all values except children and parent
 def load_node(root:Complex_Element_Object,aux_CEO,node:Complex_Element_Object,simple_Element_List):
         #get the values from the xsd
         Name = aux_CEO["@name"] 
@@ -107,15 +107,15 @@ def load_node(root:Complex_Element_Object,aux_CEO,node:Complex_Element_Object,si
                 load_children(root,node_in_tree,aux_CEO["xsd:sequence"]["xsd:element"],simple_Element_List)
         return node
 
-def load_children(root,parrent:Complex_Element_Object,aux_CEO,simple_Element_List):
+def load_children(root,parent:Complex_Element_Object,aux_CEO,simple_Element_List):
     if type(aux_CEO) is list:
         for child in aux_CEO:
             child_node = Complex_Element_Object()
             child_node = load_node(root,child,child_node,simple_Element_List)
-            parrent.add_children(child_node)
+            parent.add_children(child_node)
     else:
         child_node = Complex_Element_Object()
         child_node = load_node(root,aux_CEO,child_node,simple_Element_List)
-        parrent.add_children(child_node)
+        parent.add_children(child_node)
 
 
