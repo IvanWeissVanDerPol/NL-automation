@@ -36,12 +36,14 @@ def make_messageID(string):
             words = ''.join(words)
             words = ''.join(c for c in words if c.isupper())
         aux_string = aux_string + words
+    numbers = ''.join(re.findall(r'\d+', aux_string) )
+    aux_string = ''.join([i for i in aux_string if not i.isdigit()])
     
     messageID = "NLPROTOCOLTEST" + aux_string
     messageID = list(messageID)
-    while len(messageID) < 32:
+    while len(messageID) < 32-len(numbers):
         messageID.append("0")
-        
+    messageID.append(numbers)
     messageID = add_lowecases_for_MRID(messageID,[8,13,18,23])
     messageID = ''.join(messageID)
     return messageID
