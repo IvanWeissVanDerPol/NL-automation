@@ -64,7 +64,7 @@ class Complex_Element_Object():
             name_list = name_of_node_in_search.split("_") 
             #typo in the xsd Measurement_Series should be MeasurementSeries
             #! add an error for new typos to know to add
-            listOfTypos = ["Measurement","Series", "Detail","Series",'Acknowledgement','MarketDocument','Volume',"Series",'Reading',"DateAndOrTime"]
+            listOfTypos = ["Measurement","Series", "Detail","Series",'Acknowledgement','MarketDocument','Volume',"Series",'Reading',"DateAndOrTime","AggregatedAllocation""Series"]
             #if the name of the current node is in the name list the desired node is a child of this node 
             # remove the name from the node in the name lists
             if self.complex_data.Name in name_list:
