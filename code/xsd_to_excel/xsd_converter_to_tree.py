@@ -103,7 +103,7 @@ def load_node(root:Complex_Element_Object,aux_CEO,node:Complex_Element_Object,si
                     #an error happend and the code needs to be adjusted
                     if node_in_tree  == None:
                         print("stop")
-                        sys.exit("node not found in tree, posibbly a typo check if a node has a name like AggregatedAllocation_Series and add AggregatedAllocation Series to the list of typos ")
+                        sys.exit("node: " + Name + " not found in tree, posibbly a typo check if a node has a name like AggregatedAllocation_Series and add AggregatedAllocation Series to the list of typos ")
                                 # i wrote the code to see each _ as a node of the xml so if a node has a _ in the name you add it to typos list and it fixes it 
                 load_children(root,node_in_tree,aux_CEO["xsd:sequence"]["xsd:element"],simple_Element_List)
         return node

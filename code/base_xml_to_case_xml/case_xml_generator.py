@@ -156,7 +156,7 @@ def generate_xmls(message_details_folder_path,excel):
     #remove every row after the index
     df = df.iloc[:index]
 
-    
+    ##############################################ADD FUNCTION FOR SOAP STUFF #
     df = df.T
     df.style.hide(axis= 'index')
     df.columns = df.iloc[0]
@@ -187,9 +187,18 @@ def generate_xmls(message_details_folder_path,excel):
                         for element_name in element_name_arr:
                             xml_element = xml_element.find(element_name)
                         xml_element.string = str(row[col])
+                        
+            #fill soap data 
+            for line in Bs_data.findChildren():
+                content = line.contents[0]
+                if content.startswith('copy_from_element'):
+                    element = content.rsplit("_",1)[1]
+                    line.contents[0] = Bs_data.find(element).contents[0]
+
             #store the data and remove unused tags
             data = str(Bs_data)
             data = data.split("\n")
+            
             lines_to_remove = []
             for line in data:
                 if "not_mapped" in line:
@@ -223,7 +232,7 @@ def generate_xmls(message_details_folder_path,excel):
                 values_data = file.read()
             Bs_values = BeautifulSoup(values_data, "xml",)
             Bs_data = BeautifulSoup("".join(data), "xml")
-            
+            Bs_data.find()
             series_blocks = Bs_values.findChildren(recursive=False)[0].findChildren(recursive=False)
             series_block_name = series_blocks[0].name
             parent_node = Bs_data.find(series_block_name).parent
@@ -240,6 +249,8 @@ def generate_xmls(message_details_folder_path,excel):
             data = data.replace("ccma:", "")
             data = data.replace("<", "<ccma:")
             data = data.replace("<ccma:/", "</ccma:")
+            data = data.replace("ccma:SOAP-ENV", "SOAP-ENV")
+            data = data.replace("ccma:hdr", "hdr")
             data = data.replace("><", ">\n<")
             data = data.split("\n")
             data = "".join(data)

@@ -15,7 +15,7 @@ while stay_in_program:
     print("[3] make xmls and jsons")
     print("[any] exit")
 #    case = input()
-    case = "1" 
+    case = "3" 
     if case == "1":
         make_excels_from_xsd(folder_Of_xsd=paths.xsd_folder_path) # makes a base excel with the structure of the xsd
     elif case == "2":
