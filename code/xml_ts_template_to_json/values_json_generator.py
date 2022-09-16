@@ -1,7 +1,12 @@
 import re
 import os
 import json
-#import paths
+
+import paths
+with open(paths.prefix_path) as json_file:
+    prefix_json = json.load(json_file)
+    prefix_json = prefix_json["prefix"]
+
 
 def values_json_generator(xml_path):
     """
@@ -21,9 +26,11 @@ def values_json_generator(xml_path):
 
     #get all the xml files
     xml_path = xml_path + '/'
+    
     for folder in os.listdir(xml_path):
         json_data = {}
         if os.path.isdir(xml_path + folder):
+            real_prefix_value = prefix_json[folder]
             json_path = xml_path + folder + '/' + 'values.json'
             folder_path = xml_path + folder + '/'
             for xml in os.listdir(folder_path):
@@ -39,11 +46,11 @@ def values_json_generator(xml_path):
                         #get all the values of the xml file in the first block of detail series
                         first_block = True
                         for line in data:
-                            if re.search(r"</ccma:Detail_Series>", line):
+                            if re.search(r"</"+ real_prefix_value + ":Detail_Series>", line):
                                 first_block = False
-                            if re.search(r"<ccma:direction>.*?</ccma:direction>", line):
-                                direction.append(re.search(r"<ccma:direction>(.*?)</ccma:direction>", line).group(1))
-                            if re.search(r"<ccma:quantity>.*?</ccma:quantity>", line) and first_block:
+                            if re.search(r"<"+ real_prefix_value + ":direction>.*?</"+ real_prefix_value + ":direction>", line):
+                                direction.append(re.search(r"<"+ real_prefix_value + ":direction>(.*?)</"+ real_prefix_value + ":direction>", line).group(1))
+                            if re.search(r"<"+ real_prefix_value + ":quantity>.*?</"+ real_prefix_value + ":quantity>", line) and first_block:
                                 quantity.append(re.findall(r'\d+', line)[0])
                         #add the values to the json
                         values_xml_name = os.path.splitext(file_name)[0]

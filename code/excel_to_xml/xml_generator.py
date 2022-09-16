@@ -14,7 +14,9 @@ from os import error, listdir
 from pandas.io.pytables import AppendableFrameTable
 sys.path[0] += '\\..'
 
-
+with open(paths.prefix_path) as json_file:
+    prefix_json = json.load(json_file)
+    prefix_json = prefix_json["prefix"]
 list_of_xml_elements = []
 
 def get_xml_row_data(has_child_list,rows,col_list,previous_col,f,default_value_list):
@@ -23,8 +25,6 @@ def get_xml_row_data(has_child_list,rows,col_list,previous_col,f,default_value_l
         element = rows.pop(0)
         col = col_list.pop(0)
         default_value = default_value_list.pop(0)
-        #if (default_value != "not_mapped" and default_value != "not_mapped and not used"):
-            #f.write("<ccma:"+element+">"+default_value+"</ccma:"+element+">")
         write_xml_Row(has_child_list= has_child_list,has_child=has_child, col=col, col_list=col_list, element=element, previous_col= previous_col, rows=rows,f=f, default_value_list=default_value_list,default_value=default_value)
 
 
@@ -32,14 +32,17 @@ def write_xml_Row(has_child_list,rows,col_list,previous_col,has_child,element,co
     tabs = "\t"*col
     
     if "/" in element:
+        prefix_value = element.split("/",1)[0]
         element = element.rsplit("/",1)[1]
-        
-    prefix = tabs + "<ccma:" + str(element) + ">"
+    else:
+        prefix_value = element
+    real_prefix_value = prefix_json[prefix_value]
+    prefix = tabs + "<" + real_prefix_value +  ":" + str(element) + ">"
     if(str(default_value) == 'nan'):
         default_value = ""
     
     value = str(default_value)
-    sufix = "</ccma:"+ str(element) + ">"
+    sufix = "</"+ real_prefix_value + ":"+ str(element) + ">"
     
     line = prefix
     if len(col_list) >=0:

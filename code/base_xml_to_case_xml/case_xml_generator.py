@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import shutil
@@ -13,7 +14,10 @@ import xml.dom.minidom as minidom
 
 string_of_start_of_json_stuff = "info para json"
 string_of_values_file = "values file"
-
+with open(paths.prefix_path) as json_file:
+    prefix_json = json.load(json_file)
+    prefix_json = prefix_json["prefix"]
+    
 def printCompleteDf(df):
     print("\n\n\n\nprinting_full_df\n")
     pd.set_option("max_rows", None)
@@ -25,7 +29,7 @@ def add_lowecases_for_MRID(text,list_of_lower_cases_pos):
         text.insert(pos,"-")
     return text
 
-def make_messageID(string):
+def make_ID(string):
     string = string.replace(" ", "_")
     messageID = string.split("_")
     aux_string = ""
@@ -87,7 +91,7 @@ def create_messages(path):
                         value = row[col]
                         if value == "Generate_message_ID":
                             message_ID_base = excel_name + " " + message_name 
-                            row[col] = make_messageID(message_ID_base)
+                            row[col] = make_ID(message_ID_base)
                         if not pd.isna(value):
                             value = ""
                         if "[" in str(row[col]):
@@ -140,6 +144,8 @@ def decompress_excel_messages(excel,message_details_folder_path):
         
         
 def generate_xmls(message_details_folder_path,excel):
+    message_type = excel.rsplit("_",1)[1].rsplit(".",1)[0]
+    real_prefix_value = prefix_json[message_type ]
     path = message_details_folder_path + "\\" + excel
     case_name = excel.rsplit("_",1)[1].replace(".xlsx", "")
     base_path = paths.xmls_folder_path +"\\base\\base_" + case_name + ".xml"
@@ -188,12 +194,25 @@ def generate_xmls(message_details_folder_path,excel):
                             xml_element = xml_element.find(element_name)
                         xml_element.string = str(row[col])
                         
+                        
+            data = []
             #fill soap data 
             for line in Bs_data.findChildren():
-                content = line.contents[0]
-                if content.startswith('copy_from_element'):
-                    element = content.rsplit("_",1)[1]
-                    line.contents[0] = Bs_data.find(element).contents[0]
+                if line.contents != []:
+                    content = line.contents[0]
+                    element_str = ""
+                    if content.startswith('copy_from_'):
+                        element = content.rsplit("_",1)[1]
+                        line.contents[0] = Bs_data.find(element).contents[0]
+                    if content.startswith('make_ID'):
+                        element_names = re.sub(r"([A-Z])", r" \1", line.name).split()
+                        for element_name in element_names:
+                            element_name = element_name.title()
+                            element_str = element_str + element_name
+                        message_ID_base = message_type + " " + message_name  + " " + element_str
+                        element = make_ID(message_ID_base)
+                        line.string = element
+                data.append(line)
 
             #store the data and remove unused tags
             data = str(Bs_data)
@@ -246,11 +265,11 @@ def generate_xmls(message_details_folder_path,excel):
             data = str(Bs_data).replace("\n", "")
             data = data.replace('<?xml version="1.0" encoding="utf-8"?>', "")
         
-            data = data.replace("ccma:", "")
-            data = data.replace("<", "<ccma:")
-            data = data.replace("<ccma:/", "</ccma:")
-            data = data.replace("ccma:SOAP-ENV", "SOAP-ENV")
-            data = data.replace("ccma:hdr", "hdr")
+            data = data.replace(""+ real_prefix_value + ":", "")
+            data = data.replace("<", "<"+ real_prefix_value + ":")
+            data = data.replace("<"+ real_prefix_value + ":/", "</"+ real_prefix_value + ":")
+            data = data.replace(""+ real_prefix_value + ":SOAP-ENV", "SOAP-ENV")
+            data = data.replace(""+ real_prefix_value + ":hdr", "hdr")
             data = data.replace("><", ">\n<")
             data = data.split("\n")
             data = "".join(data)

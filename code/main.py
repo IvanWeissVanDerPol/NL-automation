@@ -13,6 +13,7 @@ while stay_in_program:
     print("[1] make excels from xsd")    #makes an excel tat contains the xsd details here you put the default values and all te test cases (['Correct_Value', 'Invalid_Value', 'Empty_Value', 'Missing_Element']) and the rules for each element
     print("[2] make base xmls")
     print("[3] make xmls and jsons")
+    print("[4] setup help")
     print("[any] exit")
 #    case = input()
     case = "3" 
@@ -25,12 +26,18 @@ while stay_in_program:
         print("[1] yes")
         print("[2] no")
         sure = input()
+        #sure = "1"
         if sure == "1":
             make_base_xmls(message_details_folder_path=paths.message_details_folder_path)
     elif case == "3":
         values_json_generator(paths.times_txt_paths)
         generate_xml_cases_from_decompressed_excel(message_details_folder_path=paths.message_details_folder_path)
         generate_json(folder_path=paths.message_details_folder_path, struct_excel_path=paths.struct_excel_path)
+    elif case == "4":
+        print("1 check if /xml/cases used case has namespace")
+        print("2 check if complex_element.py  listOfTypos array has the typo of current case ")
+        print("some elements in xsd have names like name_Name and the program splits elements by _")
+        print("just add both names to the list listOfTypos in that order ")
     else:
         stay_in_program = False
 
