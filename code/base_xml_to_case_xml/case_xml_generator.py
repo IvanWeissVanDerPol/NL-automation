@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import re
 import shutil
 from matplotlib.pyplot import pause
@@ -18,6 +19,26 @@ with open(paths.prefix_path) as json_file:
     prefix_json = json.load(json_file)
     prefix_json = prefix_json["prefix"]
     
+with open(paths.EAN_Values_path) as EAN_Value_file:
+    EAN_Values_json = json.load(EAN_Value_file)
+    list_of_valid_gridpoints_json = EAN_Values_json["list_of_valid_gridpoints"]
+    list_of_valid_MarketParties_sender_json = EAN_Values_json["list_of_valid_MarketParties_sender"]
+    list_of_valid_MarketParties_receiver_json = EAN_Values_json["list_of_valid_MarketParties_receiver"]
+    list_of_valid_NetAreas_json = EAN_Values_json["list_of_valid_NetAreas"]
+    
+    
+def select_random_gridpoints():
+    return random.choice(list_of_valid_gridpoints_json)
+
+def select_random_MarketParties_sender():
+    return random.choice(list_of_valid_MarketParties_sender_json)
+
+def select_random_MarketParties_receiver():
+    return random.choice(list_of_valid_MarketParties_receiver_json)
+
+def select_random_NetAreas():
+    return random.choice(list_of_valid_NetAreas_json)
+
 def printCompleteDf(df):
     print("\n\n\n\nprinting_full_df\n")
     pd.set_option("max_rows", None)
@@ -92,6 +113,8 @@ def create_messages(path):
                         if value == "Generate_message_ID":
                             message_ID_base = excel_name + " " + message_name 
                             row[col] = make_ID(message_ID_base)
+                        elif value == "use_gridpoint_from_list":
+                            row[col] = select_random_gridpoints()
                         if not pd.isna(value):
                             value = ""
                         if "[" in str(row[col]):

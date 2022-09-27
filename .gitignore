@@ -143,4 +143,5 @@ xml/*
 xml/base/*
 
 worksheet
-/values
+/values/*/
+
